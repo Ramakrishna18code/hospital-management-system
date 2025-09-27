@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <custom>false</custom>
+    <userLicense>Salesforce</userLicense>
+    <applicationVisibilities>
+        <application>Hospital_Management</application>
+        <default>true</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <tabVisibilities>
+        <tab>Patient__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Doctor__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Appointment__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+</Profile>

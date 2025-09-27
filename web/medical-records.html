@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hospital Management System - Medical Records</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.19.0/styles/salesforce-lightning-design-system.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="nav-menu">
+        <a href="index.html">Dashboard</a>
+        <a href="patients.html">Patients</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="medical-records.html">Medical Records</a>
+    </div>
+
+    <div class="app-container">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-1">
+                <h1 class="slds-text-heading_large slds-m-bottom_medium">Medical Records</h1>
+
+                <!-- Search and Filter Section -->
+                <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="slds-form-element">
+                            <input type="text" placeholder="Search patient records..." class="slds-input" 
+                                   onkeyup="searchRecords(this.value)">
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="slds-form-element">
+                            <select class="slds-select" onchange="filterByType(this.value)">
+                                <option value="">All Record Types</option>
+                                <option value="Consultation">Consultation</option>
+                                <option value="Lab Test">Lab Test</option>
+                                <option value="Surgery">Surgery</option>
+                                <option value="Prescription">Prescription</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <button class="slds-button slds-button_brand" onclick="showAddRecordModal()">
+                            Add New Record
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Records Table -->
+                <div class="table-container">
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th>Record ID</th>
+                                <th>Date</th>
+                                <th>Patient Name</th>
+                                <th>Record Type</th>
+                                <th>Doctor</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recordsTableBody">
+                            <tr>
+                                <td>MR001</td>
+                                <td>2025-09-28</td>
+                                <td>John Doe</td>
+                                <td>Consultation</td>
+                                <td>Dr. Sarah Johnson</td>
+                                <td><span class="status-badge status-active">Complete</span></td>
+                                <td>
+                                    <button class="slds-button slds-button_neutral" onclick="viewRecord('MR001')">View</button>
+                                    <button class="slds-button slds-button_neutral" onclick="editRecord('MR001')">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>MR002</td>
+                                <td>2025-09-27</td>
+                                <td>Jane Smith</td>
+                                <td>Lab Test</td>
+                                <td>Dr. Michael Chen</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="slds-button slds-button_neutral" onclick="viewRecord('MR002')">View</button>
+                                    <button class="slds-button slds-button_neutral" onclick="editRecord('MR002')">Edit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Record Modal -->
+    <div id="addRecordModal" class="slds-modal" aria-hidden="true" role="dialog">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <h2 class="slds-text-heading_medium">Add New Medical Record</h2>
+                <button class="slds-button slds-button_icon slds-modal__close" onclick="hideAddRecordModal()">
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium">
+                <form id="addRecordForm">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">Patient</label>
+                        <div class="slds-form-element__control">
+                            <select class="slds-select" required>
+                                <option value="">Select Patient...</option>
+                                <option value="1">John Doe</option>
+                                <option value="2">Jane Smith</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Record Type</label>
+                        <div class="slds-form-element__control">
+                            <select class="slds-select" required>
+                                <option value="">Select Type...</option>
+                                <option value="Consultation">Consultation</option>
+                                <option value="Lab Test">Lab Test</option>
+                                <option value="Surgery">Surgery</option>
+                                <option value="Prescription">Prescription</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Doctor</label>
+                        <div class="slds-form-element__control">
+                            <select class="slds-select" required>
+                                <option value="">Select Doctor...</option>
+                                <option value="1">Dr. Sarah Johnson</option>
+                                <option value="2">Dr. Michael Chen</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Date</label>
+                        <div class="slds-form-element__control">
+                            <input type="date" class="slds-input" required>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Notes</label>
+                        <div class="slds-form-element__control">
+                            <textarea class="slds-textarea" rows="4" required></textarea>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Attachments</label>
+                        <div class="slds-form-element__control">
+                            <input type="file" class="slds-file-selector__input" 
+                                   accept=".pdf,.jpg,.png,.doc,.docx">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick="hideAddRecordModal()">Cancel</button>
+                <button class="slds-button slds-button_brand" onclick="saveRecord()">Save Record</button>
+            </div>
+        </div>
+    </div>
+    <div id="modalBackdrop" class="slds-backdrop" onclick="hideAddRecordModal()"></div>
+
+    <script>
+        function showAddRecordModal() {
+            document.getElementById('addRecordModal').classList.add('slds-fade-in-open');
+            document.getElementById('modalBackdrop').classList.add('slds-backdrop_open');
+        }
+
+        function hideAddRecordModal() {
+            document.getElementById('addRecordModal').classList.remove('slds-fade-in-open');
+            document.getElementById('modalBackdrop').classList.remove('slds-backdrop_open');
+        }
+
+        function searchRecords(query) {
+            const rows = document.querySelectorAll('#recordsTableBody tr');
+            query = query.toLowerCase();
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        }
+
+        function filterByType(type) {
+            const rows = document.querySelectorAll('#recordsTableBody tr');
+            
+            rows.forEach(row => {
+                const recordType = row.children[3].textContent;
+                row.style.display = !type || recordType === type ? '' : 'none';
+            });
+        }
+
+        function viewRecord(id) {
+            alert('Viewing medical record: ' + id);
+            // Implement view functionality
+        }
+
+        function editRecord(id) {
+            alert('Editing medical record: ' + id);
+            // Implement edit functionality
+        }
+
+        function saveRecord() {
+            alert('Medical record saved!');
+            hideAddRecordModal();
+            // Implement save functionality
+        }
+    </script>
+</body>
+</html>

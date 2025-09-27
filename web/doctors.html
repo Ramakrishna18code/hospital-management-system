@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hospital Management System - Doctors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.19.0/styles/salesforce-lightning-design-system.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="nav-menu">
+        <a href="index.html">Dashboard</a>
+        <a href="patients.html">Patients</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="medical-records.html">Medical Records</a>
+    </div>
+
+    <div class="app-container">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-1">
+                <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                    <div class="slds-col">
+                        <h1>Doctors Directory</h1>
+                    </div>
+                    <div class="slds-col slds-text-align_right">
+                        <button class="slds-button slds-button_brand" onclick="showAddDoctorModal()">
+                            Add New Doctor
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                        <div class="slds-col slds-size_1-of-3">
+                            <div class="slds-form-element">
+                                <input type="text" placeholder="Search doctors..." class="slds-input" 
+                                       onkeyup="searchDoctors(this.value)">
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <div class="slds-form-element">
+                                <select class="slds-select" onchange="filterByDepartment(this.value)">
+                                    <option value="">All Departments</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Pediatrics">Pediatrics</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-grid slds-gutters slds-wrap" id="doctorsGrid">
+                        <!-- Doctor Card Template -->
+                        <div class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
+                            <div class="card">
+                                <div class="slds-media">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-avatar slds-avatar_large">
+                                            <img src="https://via.placeholder.com/96" alt="Dr. John Smith"/>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <h2 class="slds-text-heading_medium">Dr. John Smith</h2>
+                                        <p class="slds-text-body_small">Cardiology</p>
+                                        <p class="slds-text-body_small">20 years experience</p>
+                                    </div>
+                                </div>
+                                <div class="slds-m-top_small">
+                                    <p><strong>Available Hours:</strong> Mon-Fri, 9AM-5PM</p>
+                                    <p><strong>Next Available:</strong> Today, 2:00 PM</p>
+                                </div>
+                                <div class="slds-m-top_small">
+                                    <button class="slds-button slds-button_neutral" onclick="viewDoctor('D001')">View Profile</button>
+                                    <button class="slds-button slds-button_brand" onclick="scheduleAppointment('D001')">Schedule</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Duplicate cards for demo -->
+                        <div class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
+                            <div class="card">
+                                <div class="slds-media">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-avatar slds-avatar_large">
+                                            <img src="https://via.placeholder.com/96" alt="Dr. Sarah Johnson"/>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <h2 class="slds-text-heading_medium">Dr. Sarah Johnson</h2>
+                                        <p class="slds-text-body_small">Pediatrics</p>
+                                        <p class="slds-text-body_small">15 years experience</p>
+                                    </div>
+                                </div>
+                                <div class="slds-m-top_small">
+                                    <p><strong>Available Hours:</strong> Mon-Thu, 8AM-4PM</p>
+                                    <p><strong>Next Available:</strong> Tomorrow, 10:00 AM</p>
+                                </div>
+                                <div class="slds-m-top_small">
+                                    <button class="slds-button slds-button_neutral" onclick="viewDoctor('D002')">View Profile</button>
+                                    <button class="slds-button slds-button_brand" onclick="scheduleAppointment('D002')">Schedule</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Doctor Modal -->
+    <div id="addDoctorModal" class="slds-modal" aria-hidden="true" role="dialog">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <h2 class="slds-text-heading_medium">Add New Doctor</h2>
+                <button class="slds-button slds-button_icon slds-modal__close" onclick="hideAddDoctorModal()">
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium">
+                <form id="addDoctorForm">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">Full Name</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" class="slds-input" required>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Department</label>
+                        <div class="slds-form-element__control">
+                            <select class="slds-select" required>
+                                <option value="">Select...</option>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Experience (years)</label>
+                        <div class="slds-form-element__control">
+                            <input type="number" class="slds-input" required>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Contact Number</label>
+                        <div class="slds-form-element__control">
+                            <input type="tel" class="slds-input" required>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Email</label>
+                        <div class="slds-form-element__control">
+                            <input type="email" class="slds-input" required>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Available Hours</label>
+                        <div class="slds-form-element__control">
+                            <textarea class="slds-textarea" required></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick="hideAddDoctorModal()">Cancel</button>
+                <button class="slds-button slds-button_brand" onclick="saveDoctor()">Save</button>
+            </div>
+        </div>
+    </div>
+    <div id="modalBackdrop" class="slds-backdrop" onclick="hideAddDoctorModal()"></div>
+
+    <script>
+        function showAddDoctorModal() {
+            document.getElementById('addDoctorModal').classList.add('slds-fade-in-open');
+            document.getElementById('modalBackdrop').classList.add('slds-backdrop_open');
+        }
+
+        function hideAddDoctorModal() {
+            document.getElementById('addDoctorModal').classList.remove('slds-fade-in-open');
+            document.getElementById('modalBackdrop').classList.remove('slds-backdrop_open');
+        }
+
+        function searchDoctors(query) {
+            const cards = document.querySelectorAll('#doctorsGrid .card');
+            query = query.toLowerCase();
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.parentElement.style.display = text.includes(query) ? '' : 'none';
+            });
+        }
+
+        function filterByDepartment(department) {
+            const cards = document.querySelectorAll('#doctorsGrid .card');
+            
+            cards.forEach(card => {
+                const deptText = card.querySelector('.slds-text-body_small').textContent;
+                card.parentElement.style.display = !department || deptText === department ? '' : 'none';
+            });
+        }
+
+        function viewDoctor(id) {
+            alert('Viewing doctor profile: ' + id);
+            // Implement view functionality
+        }
+
+        function scheduleAppointment(id) {
+            alert('Scheduling appointment with doctor: ' + id);
+            // Implement scheduling functionality
+        }
+
+        function saveDoctor() {
+            alert('Doctor information saved!');
+            hideAddDoctorModal();
+            // Implement save functionality
+        }
+    </script>
+</body>
+</html>

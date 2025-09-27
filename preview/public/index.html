@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.19.0/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        .preview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .component-container {
+            background: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #d8dde6;
+            border-radius: 4px;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+        }
+        .slds-page-header {
+            background: #ffffff;
+            border-bottom: 1px solid #d8dde6;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <!-- Header -->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-custom">
+                                <svg class="slds-icon slds-icon_large" aria-hidden="true">
+                                    <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#custom"></use>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate">Hospital Management System</span>
+                                    </h1>
+                                    <p class="slds-page-header__name-meta">Local Preview</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="preview-container">
+            <div class="slds-grid slds-gutters">
+                <!-- Left Column - Appointment Scheduler -->
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="component-container">
+                        <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+                            <span class="slds-icon_container slds-icon-standard-event" title="Appointment Scheduler">
+                                Schedule Appointment
+                            </span>
+                        </h2>
+                        <div class="slds-form">
+                            <!-- Doctor Selection -->
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="doctor-select">Select Doctor</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <select class="slds-select" id="doctor-select">
+                                            <option value="">Choose a doctor...</option>
+                                            <option value="1">Dr. John Smith - Cardiology</option>
+                                            <option value="2">Dr. Sarah Johnson - Pediatrics</option>
+                                            <option value="3">Dr. Michael Chen - Neurology</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Date Selection -->
+                            <div class="slds-form-element slds-m-top_medium">
+                                <label class="slds-form-element__label" for="appointment-date">Appointment Date</label>
+                                <div class="slds-form-element__control">
+                                    <input type="date" id="appointment-date" class="slds-input" />
+                                </div>
+                            </div>
+                            
+                            <!-- Time Selection -->
+                            <div class="slds-form-element slds-m-top_medium">
+                                <label class="slds-form-element__label" for="appointment-time">Appointment Time</label>
+                                <div class="slds-form-element__control">
+                                    <input type="time" id="appointment-time" class="slds-input" />
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div class="slds-m-top_medium">
+                                <button class="slds-button slds-button_brand">Schedule Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Patient Details -->
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="component-container">
+                        <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+                            <span class="slds-icon_container slds-icon-standard-person-account" title="Patient Details">
+                                Patient Details
+                            </span>
+                        </h2>
+                        <div class="slds-form">
+                            <!-- Personal Information -->
+                            <div class="slds-form-element">
+                                <span class="slds-form-element__label">Name</span>
+                                <div class="slds-form-element__static">John Doe</div>
+                            </div>
+                            <div class="slds-form-element">
+                                <span class="slds-form-element__label">Date of Birth</span>
+                                <div class="slds-form-element__static">1980-05-15</div>
+                            </div>
+                            <div class="slds-form-element">
+                                <span class="slds-form-element__label">Gender</span>
+                                <div class="slds-form-element__static">Male</div>
+                            </div>
+                            
+                            <!-- Contact Information -->
+                            <div class="slds-form-element">
+                                <span class="slds-form-element__label">Email</span>
+                                <div class="slds-form-element__static">john.doe@email.com</div>
+                            </div>
+                            <div class="slds-form-element">
+                                <span class="slds-form-element__label">Phone</span>
+                                <div class="slds-form-element__static">555-0101</div>
+                            </div>
+                            
+                            <!-- Medical History -->
+                            <div class="slds-form-element">
+                                <span class="slds-form-element__label">Medical History</span>
+                                <div class="slds-form-element__static">No significant medical history</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add basic interactivity
+        document.querySelector('#doctor-select').addEventListener('change', function(e) {
+            console.log('Selected doctor:', e.target.value);
+        });
+
+        document.querySelector('#appointment-date').addEventListener('change', function(e) {
+            console.log('Selected date:', e.target.value);
+        });
+
+        document.querySelector('#appointment-time').addEventListener('change', function(e) {
+            console.log('Selected time:', e.target.value);
+        });
+
+        document.querySelector('.slds-button_brand').addEventListener('click', function() {
+            const doctor = document.querySelector('#doctor-select').value;
+            const date = document.querySelector('#appointment-date').value;
+            const time = document.querySelector('#appointment-time').value;
+            
+            if (!doctor || !date || !time) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            alert(`Appointment scheduled!\nDoctor: ${doctor}\nDate: ${date}\nTime: ${time}`);
+        });
+    </script>
+</body>
+</html>

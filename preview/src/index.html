@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hospital Management System - Local Preview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.19.0/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        .preview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .component-container {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #d8dde6;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate">Hospital Management System - Local Preview</span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="preview-container">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="component-container">
+                        <h2 class="slds-text-heading_medium slds-m-bottom_medium">Appointment Scheduler</h2>
+                        <div id="appointment-scheduler-preview">
+                            <!-- Appointment Scheduler Preview -->
+                            <div class="slds-form">
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label" for="doctor-select">Select Doctor</label>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-select_container">
+                                            <select class="slds-select" id="doctor-select">
+                                                <option value="">Choose a doctor...</option>
+                                                <option value="1">Dr. John Smith - Cardiology</option>
+                                                <option value="2">Dr. Sarah Johnson - Pediatrics</option>
+                                                <option value="3">Dr. Michael Chen - Neurology</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element slds-m-top_medium">
+                                    <label class="slds-form-element__label" for="appointment-date">Appointment Date</label>
+                                    <div class="slds-form-element__control">
+                                        <input type="date" id="appointment-date" class="slds-input" />
+                                    </div>
+                                </div>
+                                <button class="slds-button slds-button_brand slds-m-top_medium">Schedule Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="component-container">
+                        <h2 class="slds-text-heading_medium slds-m-bottom_medium">Patient Details</h2>
+                        <div id="patient-details-preview">
+                            <!-- Patient Details Preview -->
+                            <div class="slds-form">
+                                <div class="slds-form-element">
+                                    <span class="slds-form-element__label">Name</span>
+                                    <div class="slds-form-element__static">John Doe</div>
+                                </div>
+                                <div class="slds-form-element">
+                                    <span class="slds-form-element__label">Date of Birth</span>
+                                    <div class="slds-form-element__static">1980-05-15</div>
+                                </div>
+                                <div class="slds-form-element">
+                                    <span class="slds-form-element__label">Gender</span>
+                                    <div class="slds-form-element__static">Male</div>
+                                </div>
+                                <div class="slds-form-element">
+                                    <span class="slds-form-element__label">Email</span>
+                                    <div class="slds-form-element__static">john.doe@email.com</div>
+                                </div>
+                                <div class="slds-form-element">
+                                    <span class="slds-form-element__label">Phone</span>
+                                    <div class="slds-form-element__static">555-0101</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

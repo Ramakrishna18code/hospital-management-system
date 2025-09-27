@@ -1,0 +1,11 @@
+{
+    "name": "hospital-management-preview",
+    "version": "1.0.0",
+    "description": "Local preview for Hospital Management System",
+    "scripts": {
+        "start": "http-server ./src -p 8080"
+    },
+    "dependencies": {
+        "http-server": "^14.1.1"
+    }
+}

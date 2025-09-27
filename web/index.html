@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hospital Management System - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.19.0/styles/salesforce-lightning-design-system.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1 style="margin: 0; color: #16325c;">Hospital Management System</h1>
+    </div>
+    
+    <div class="app-container">
+        <div class="slds-grid slds-gutters">
+            <!-- Left Column -->
+            <div class="slds-col slds-size_1-of-2">
+                <div class="card">
+                    <h2 style="color: #16325c; margin-bottom: 1.5rem;">Schedule Appointment</h2>
+                    
+                    <div class="slds-form">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Select Doctor</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-select_container">
+                                    <select class="slds-select" id="doctorSelect">
+                                        <option value="">Choose a doctor...</option>
+                                        <option value="1">Dr. John Smith - Cardiology</option>
+                                        <option value="2">Dr. Sarah Johnson - Pediatrics</option>
+                                        <option value="3">Dr. Michael Chen - Neurology</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element" style="margin-top: 1rem;">
+                            <label class="slds-form-element__label">Date</label>
+                            <div class="slds-form-element__control">
+                                <input type="date" class="slds-input" id="appointmentDate">
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element" style="margin-top: 1rem;">
+                            <label class="slds-form-element__label">Time</label>
+                            <div class="slds-form-element__control">
+                                <input type="time" class="slds-input" id="appointmentTime">
+                            </div>
+                        </div>
+
+                        <button class="slds-button slds-button_brand" style="margin-top: 1.5rem;" onclick="scheduleAppointment()">
+                            Schedule Appointment
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="slds-col slds-size_1-of-2">
+                <div class="card">
+                    <h2 style="color: #16325c; margin-bottom: 1.5rem;">Patient Information</h2>
+                    
+                    <div class="slds-form">
+                        <div class="slds-form-element">
+                            <span class="slds-form-element__label">Name</span>
+                            <div class="slds-form-element__static">John Doe</div>
+                        </div>
+
+                        <div class="slds-form-element">
+                            <span class="slds-form-element__label">Date of Birth</span>
+                            <div class="slds-form-element__static">1980-05-15</div>
+                        </div>
+
+                        <div class="slds-form-element">
+                            <span class="slds-form-element__label">Gender</span>
+                            <div class="slds-form-element__static">Male</div>
+                        </div>
+
+                        <div class="slds-form-element">
+                            <span class="slds-form-element__label">Email</span>
+                            <div class="slds-form-element__static">john.doe@email.com</div>
+                        </div>
+
+                        <div class="slds-form-element">
+                            <span class="slds-form-element__label">Phone</span>
+                            <div class="slds-form-element__static">(555) 123-4567</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set min date to today
+        document.getElementById('appointmentDate').min = new Date().toISOString().split('T')[0];
+
+        function scheduleAppointment() {
+            const doctor = document.getElementById('doctorSelect').value;
+            const date = document.getElementById('appointmentDate').value;
+            const time = document.getElementById('appointmentTime').value;
+
+            if (!doctor || !date || !time) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            alert('Appointment scheduled successfully!');
+        }
+    </script>
+</body>
+</html>

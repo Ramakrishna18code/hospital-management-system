@@ -1,0 +1,60 @@
+<template>
+    <lightning-card title="Appointment Scheduler" icon-name="standard:event">
+        <div class="slds-p-around_medium">
+            <!-- Doctor Selection -->
+            <lightning-combobox
+                name="doctor"
+                label="Select Doctor"
+                value={selectedDoctor}
+                placeholder="Choose a doctor"
+                onchange={handleDoctorChange}
+                options={doctorOptions}>
+            </lightning-combobox>
+
+            <!-- Date Selection -->
+            <lightning-input 
+                type="date" 
+                name="appointmentDate"
+                label="Appointment Date"
+                value={selectedDate}
+                onchange={handleDateChange}
+                class="slds-m-top_small">
+            </lightning-input>
+
+            <!-- Appointments List -->
+            <div class="slds-m-top_medium">
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </template>
+                
+                <template if:true={appointments.length}>
+                    <div class="slds-text-heading_small slds-m-bottom_small">
+                        Scheduled Appointments
+                    </div>
+                    <lightning-datatable
+                        key-field="id"
+                        data={appointments}
+                        columns={columns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </template>
+                
+                <template if:false={appointments.length}>
+                    <div class="slds-text-align_center slds-m-top_medium">
+                        No appointments scheduled for this date
+                    </div>
+                </template>
+            </div>
+
+            <!-- Schedule Button -->
+            <div class="slds-m-top_medium">
+                <lightning-button
+                    label="Schedule Appointment"
+                    variant="brand"
+                    onclick={handleScheduleAppointment}
+                    disabled={isLoading}>
+                </lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

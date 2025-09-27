@@ -1,0 +1,4 @@
+Patient__c,Name,DateOfBirth__c,Gender__c,Email__c,Phone__c,MedicalHistory__c
+"John Doe","1980-05-15","Male","john.doe@email.com","555-0101","No significant medical history"
+"Jane Smith","1992-08-22","Female","jane.smith@email.com","555-0102","Allergic to penicillin"
+"Robert Johnson","1975-03-30","Male","robert.j@email.com","555-0103","Hypertension"

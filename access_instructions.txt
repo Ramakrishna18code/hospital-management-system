@@ -1,0 +1,33 @@
+// To view the data in your Salesforce org:
+
+1. Login to your Salesforce org
+2. Open the App Launcher (nine dots in top-left)
+3. Click on "Hospital Management"
+4. Use the navigation menu to access:
+
+   a. Doctors List:
+      - Click "Doctors" tab
+      - You'll see Dr. John Smith (Cardiology)
+      - Dr. Sarah Johnson (Pediatrics)
+      - Dr. Michael Chen (Neurology)
+
+   b. Patients List:
+      - Click "Patients" tab
+      - You'll see John Doe
+      - Jane Smith
+      - Robert Johnson
+
+   c. Appointments:
+      - Click "Appointments" tab
+      - You'll see any scheduled appointments
+
+5. To use the custom components:
+   - The Appointment Scheduler will be on the left side
+   - Patient Details will be on the right side
+
+Direct URLs to access the data:
+- Doctors: your-instance.lightning.force.com/lightning/o/Doctor__c/list
+- Patients: your-instance.lightning.force.com/lightning/o/Patient__c/list
+- Appointments: your-instance.lightning.force.com/lightning/o/Appointment__c/list
+
+Replace "your-instance" with your actual Salesforce instance URL.

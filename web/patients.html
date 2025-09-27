@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hospital Management System - Patients</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.19.0/styles/salesforce-lightning-design-system.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="nav-menu">
+        <a href="index.html">Dashboard</a>
+        <a href="patients.html">Patients</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="medical-records.html">Medical Records</a>
+    </div>
+
+    <div class="app-container">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-1">
+                <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                    <div class="slds-col">
+                        <h1>Patients Directory</h1>
+                    </div>
+                    <div class="slds-col slds-text-align_right">
+                        <button class="slds-button slds-button_brand" onclick="showAddPatientModal()">
+                            Add New Patient
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                        <div class="slds-col slds-size_1-of-3">
+                            <div class="slds-form-element">
+                                <input type="text" placeholder="Search patients..." class="slds-input" 
+                                       onkeyup="searchPatients(this.value)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th>Patient ID</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Contact</th>
+                                <th>Last Visit</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patientsTableBody">
+                            <tr>
+                                <td>P001</td>
+                                <td>John Doe</td>
+                                <td>45</td>
+                                <td>Male</td>
+                                <td>(555) 123-4567</td>
+                                <td>2025-09-15</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>
+                                    <button class="slds-button slds-button_neutral" onclick="viewPatient('P001')">View</button>
+                                    <button class="slds-button slds-button_neutral" onclick="editPatient('P001')">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>P002</td>
+                                <td>Jane Smith</td>
+                                <td>32</td>
+                                <td>Female</td>
+                                <td>(555) 987-6543</td>
+                                <td>2025-09-20</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>
+                                    <button class="slds-button slds-button_neutral" onclick="viewPatient('P002')">View</button>
+                                    <button class="slds-button slds-button_neutral" onclick="editPatient('P002')">Edit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Patient Modal -->
+    <div id="addPatientModal" class="slds-modal" aria-hidden="true" role="dialog">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <h2 class="slds-text-heading_medium">Add New Patient</h2>
+                <button class="slds-button slds-button_icon slds-modal__close" onclick="hideAddPatientModal()">
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium">
+                <form id="addPatientForm">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">Full Name</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" class="slds-input" required>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Date of Birth</label>
+                        <div class="slds-form-element__control">
+                            <input type="date" class="slds-input" required>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Gender</label>
+                        <div class="slds-form-element__control">
+                            <select class="slds-select" required>
+                                <option value="">Select...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Contact Number</label>
+                        <div class="slds-form-element__control">
+                            <input type="tel" class="slds-input" required>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Email</label>
+                        <div class="slds-form-element__control">
+                            <input type="email" class="slds-input" required>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top_small">
+                        <label class="slds-form-element__label">Address</label>
+                        <div class="slds-form-element__control">
+                            <textarea class="slds-textarea" required></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick="hideAddPatientModal()">Cancel</button>
+                <button class="slds-button slds-button_brand" onclick="savePatient()">Save</button>
+            </div>
+        </div>
+    </div>
+    <div id="modalBackdrop" class="slds-backdrop" onclick="hideAddPatientModal()"></div>
+
+    <script>
+        function showAddPatientModal() {
+            document.getElementById('addPatientModal').classList.add('slds-fade-in-open');
+            document.getElementById('modalBackdrop').classList.add('slds-backdrop_open');
+        }
+
+        function hideAddPatientModal() {
+            document.getElementById('addPatientModal').classList.remove('slds-fade-in-open');
+            document.getElementById('modalBackdrop').classList.remove('slds-backdrop_open');
+        }
+
+        function searchPatients(query) {
+            const rows = document.querySelectorAll('#patientsTableBody tr');
+            query = query.toLowerCase();
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        }
+
+        function viewPatient(id) {
+            alert('Viewing patient: ' + id);
+            // Implement view functionality
+        }
+
+        function editPatient(id) {
+            alert('Editing patient: ' + id);
+            // Implement edit functionality
+        }
+
+        function savePatient() {
+            alert('Patient information saved!');
+            hideAddPatientModal();
+            // Implement save functionality
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+    "name": "hospital-management-system",
+    "private": true,
+    "version": "1.0.0",
+    "description": "Hospital Management System on Salesforce",
+    "scripts": {
+        "lint": "npm run lint:lwc",
+        "lint:lwc": "eslint force-app/main/default/lwc",
+        "test": "npm run test:unit",
+        "test:unit": "sfdx-lwc-jest",
+        "test:unit:watch": "sfdx-lwc-jest --watch",
+        "test:unit:debug": "sfdx-lwc-jest --debug",
+        "test:unit:coverage": "sfdx-lwc-jest --coverage",
+        "serve": "lwc-dev-server"
+    },
+    "devDependencies": {
+        "@lwc/eslint-plugin-lwc": "^1.1.2",
+        "@salesforce/eslint-config-lwc": "^3.2.3",
+        "@salesforce/lwc-jest": "^1.1.0",
+        "eslint": "^8.11.0",
+        "lwc-dev-server": "^2.2.0"
+    }
+}

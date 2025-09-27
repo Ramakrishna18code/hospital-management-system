@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Patient Portal User</label>
+    <description>Access for patients to view their records and schedule appointments through the community portal</description>
+    
+    <!-- Object Permissions -->
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Patient__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Doctor__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Appointment__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    
+    <!-- Field Permissions -->
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Patient__c.DateOfBirth__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Patient__c.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Patient__c.Gender__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Patient__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Doctor__c.Specialization__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Appointment__c.AppointmentDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Appointment__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <!-- Apex Class Access -->
+    <classAccesses>
+        <apexClass>HospitalUtility</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+</PermissionSet>

@@ -1,0 +1,91 @@
+.nav-menu {
+    background: #1589ee;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 4px;
+}
+
+.nav-menu a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-card h3 {
+    margin: 0;
+    color: #16325c;
+    font-size: 1.2rem;
+}
+
+.stat-card .number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1589ee;
+    margin: 0.5rem 0;
+}
+
+.table-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-x: auto;
+}
+
+.slds-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.slds-table th,
+.slds-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e5e5;
+    text-align: left;
+}
+
+.slds-table th {
+    background: #f3f3f3;
+    font-weight: 600;
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background: #4bca81;
+    color: white;
+}
+
+.status-pending {
+    background: #ffb75d;
+    color: white;
+}
+
+.status-cancelled {
+    background: #c23934;
+    color: white;
+}

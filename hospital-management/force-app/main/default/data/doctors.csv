@@ -1,0 +1,4 @@
+Doctor__c,Name,Specialization__c,License_Number__c
+"Dr. John Smith","Cardiology","LIC-001"
+"Dr. Sarah Johnson","Pediatrics","LIC-002"
+"Dr. Michael Chen","Neurology","LIC-003"

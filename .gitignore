@@ -1,0 +1,32 @@
+# Salesforce / SFDX
+.sfdx/
+.sf/
+.localdevserver/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Environment variables
+.env
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Salesforce deployment artifacts
+mdapiout/
+mdapioutput/
+deploy/
+
+# Log files
+*.log
+
+# Cache and temp files
+.tmp/
+.temp/
+.cache/

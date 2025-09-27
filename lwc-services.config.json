@@ -1,0 +1,12 @@
+{
+    "modules": [
+        {
+            "dir": "force-app/main/default/lwc"
+        }
+    ],
+    "assets": [
+        {
+            "dir": "$rootDir/assets"
+        }
+    ]
+}
