@@ -30,3 +30,7 @@ deploy/
 .tmp/
 .temp/
 .cache/
+
+# Java
+target/
+hospital-management-1.0-SNAPSHOT.jar

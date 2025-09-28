@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management - Appointments</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+<body>
+    <nav class="nav-menu">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="patients.html">Patients</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="inventory.html">Inventory</a>
+    </nav>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Appointments Management</h1>
+            <p>Manage and track patient appointments</p>
+        </div>
+
+        <div class="action-bar" style="margin-bottom: 2rem;">
+            <button onclick="openNewAppointmentForm()" class="primary-button">New Appointment</button>
+            <input type="date" id="filterDate" onchange="filterAppointments()" style="margin-left: 1rem;">
+        </div>
+
+        <div class="appointments-grid" style="display: grid; gap: 1rem;">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3>Today's Appointments</h3>
+                    <span class="badge">5 scheduled</span>
+                </div>
+                <div class="appointment-list">
+                    <div class="appointment-item">
+                        <div class="time">09:00 AM</div>
+                        <div class="details">
+                            <strong>John Smith</strong>
+                            <span>General Checkup</span>
+                            <span>Dr. Sarah Wilson</span>
+                        </div>
+                        <div class="status pending">Pending</div>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="time">10:30 AM</div>
+                        <div class="details">
+                            <strong>Emma Johnson</strong>
+                            <span>Follow-up</span>
+                            <span>Dr. Michael Brown</span>
+                        </div>
+                        <div class="status completed">Completed</div>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="time">02:00 PM</div>
+                        <div class="details">
+                            <strong>James Wilson</strong>
+                            <span>Consultation</span>
+                            <span>Dr. Emily Davis</span>
+                        </div>
+                        <div class="status upcoming">Upcoming</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .primary-button {
+            background: #1589ee;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .primary-button:hover {
+            background: #0070d2;
+        }
+
+        .badge {
+            background: #ecebea;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .appointment-list {
+            margin-top: 1rem;
+        }
+
+        .appointment-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #ecebea;
+        }
+
+        .appointment-item:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            font-weight: 500;
+            color: #706e6b;
+        }
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .details span {
+            color: #706e6b;
+            font-size: 0.875rem;
+        }
+
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .status.pending {
+            background: #fff7e6;
+            color: #8c6d2c;
+        }
+
+        .status.completed {
+            background: #ebf7e6;
+            color: #2e844a;
+        }
+
+        .status.upcoming {
+            background: #e6efff;
+            color: #0070d2;
+        }
+    </style>
+
+    <script>
+        function openNewAppointmentForm() {
+            // TODO: Implement new appointment form
+            alert('New appointment form will be implemented here');
+        }
+
+        function filterAppointments() {
+            const date = document.getElementById('filterDate').value;
+            // TODO: Implement appointment filtering by date
+            console.log('Filtering appointments for:', date);
+        }
+
+        // Initialize date filter with today's date
+        document.getElementById('filterDate').valueAsDate = new Date();
+    </script>
+</body>
+</html>

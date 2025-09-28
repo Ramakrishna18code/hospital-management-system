@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+<body>
+    <nav class="nav-menu">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="patients.html">Patients</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="inventory.html">Inventory</a>
+    </nav>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Welcome back, Admin!</h1>
+            <p>Here's your hospital overview for today</p>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <h3>Total Patients</h3>
+                <p class="stat-number">1,234</p>
+                <p class="trend positive">↑ 5.2% vs last week</p>
+            </div>
+            <div class="stat-card">
+                <h3>Today's Appointments</h3>
+                <p class="stat-number">42</p>
+                <p class="trend neutral">→ Same as yesterday</p>
+            </div>
+            <div class="stat-card">
+                <h3>Available Doctors</h3>
+                <p class="stat-number">15</p>
+                <p class="trend pending">2 on leave</p>
+            </div>
+            <div class="stat-card">
+                <h3>Revenue (Monthly)</h3>
+                <p class="stat-number">$45,678</p>
+                <p class="trend positive">↑ 8.3% vs last month</p>
+            </div>
+        </div>
+
+        <div class="charts-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="card">
+                <h3>Weekly Appointments</h3>
+                <canvas id="appointmentsChart"></canvas>
+            </div>
+            <div class="card">
+                <h3>Revenue Trends</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Appointments Chart
+        const appointmentsCtx = document.getElementById('appointmentsChart').getContext('2d');
+        new Chart(appointmentsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Daily Appointments',
+                    data: [12, 19, 15, 17, 14, 8, 5],
+                    backgroundColor: 'rgba(21, 137, 238, 0.6)',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Monthly Revenue',
+                    data: [30000, 35000, 32000, 38000, 42000, 45678],
+                    borderColor: 'rgb(21, 137, 238)',
+                    backgroundColor: 'rgba(21, 137, 238, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Update date and time
+        const updateDateTime = () => {
+            const now = moment();
+            document.querySelector('.welcome-section p').textContent = 
+                `Here's your hospital overview for ${now.format('MMMM D, YYYY')}`;
+        };
+
+        updateDateTime();
+        setInterval(updateDateTime, 60000); // Update every minute
+    </script>
+</body>
+</html>

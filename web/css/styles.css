@@ -2,23 +2,30 @@
     background: #1589ee;
     padding: 1rem;
     margin-bottom: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .nav-menu a {
     color: white;
     text-decoration: none;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.25rem;
     margin: 0 0.5rem;
     border-radius: 4px;
+    transition: all 0.3s ease;
+    display: inline-block;
 }
 
 .nav-menu a:hover {
     background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 .dashboard-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
@@ -26,8 +33,53 @@
 .stat-card {
     background: white;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.welcome-section {
+    background: linear-gradient(135deg, #1589ee, #0070d2);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.trend {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.trend.positive {
+    color: #04844b;
+}
+
+.trend.negative {
+    color: #c23934;
+}
+
+.trend.neutral {
+    color: #706e6b;
+}
+
+.trend.pending {
+    color: #ffb75d;
+}
+
+.card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 100%;
 }
 
 .stat-card h3 {
