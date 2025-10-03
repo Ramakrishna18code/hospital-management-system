@@ -34,3 +34,7 @@ deploy/
 # Java
 target/
 hospital-management-1.0-SNAPSHOT.jar
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="/css/inventory.css">
+<script src="/js/inventory.js"></script>

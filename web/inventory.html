@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management - Inventory</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="nav-menu">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="patients.html">Patients</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="inventory.html">Inventory</a>
+        <a href="reports.html">Reports</a>
+    </nav>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Inventory Management</h1>
+            <p>Track and manage medical supplies and equipment</p>
+        </div>
+
+        <div class="action-bar">
+            <div class="action-buttons">
+                <button onclick="openNewItemForm()" class="primary-button">Add New Item</button>
+                <button onclick="openBulkOrder()" class="secondary-button">Place Bulk Order</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="inventorySearch" placeholder="Search inventory..." onkeyup="searchInventory()">
+            </div>
+        </div>
+
+        <div class="inventory-dashboard">
+            <div class="inventory-stats">
+                <div class="stat-card">
+                    <h3>Total Items</h3>
+                    <p class="stat-number">1,234</p>
+                    <p class="trend neutral">Updated today</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Low Stock Items</h3>
+                    <p class="stat-number">15</p>
+                    <p class="trend negative">Requires attention</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Orders Pending</h3>
+                    <p class="stat-number">8</p>
+                    <p class="trend pending">Processing</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Value in Stock</h3>
+                    <p class="stat-number">$45,678</p>
+                    <p class="trend positive">↑ 2.3% this month</p>
+                </div>
+            </div>
+
+            <div class="inventory-grid">
+                <div class="inventory-list card">
+                    <div class="card-header">
+                        <h3>Inventory Items</h3>
+                        <div class="filter-options">
+                            <select id="categoryFilter" onchange="filterInventory()">
+                                <option value="">All Categories</option>
+                                <option value="medicines">Medicines</option>
+                                <option value="equipment">Medical Equipment</option>
+                                <option value="supplies">General Supplies</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>In Stock</th>
+                                <th>Unit Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryList">
+                            <tr>
+                                <td>Surgical Masks</td>
+                                <td>Supplies</td>
+                                <td>2,500</td>
+                                <td>$0.50</td>
+                                <td><span class="status good">Good Stock</span></td>
+                                <td>
+                                    <button onclick="editItem(1)" class="icon-button">✏️</button>
+                                    <button onclick="orderItem(1)" class="icon-button">🛒</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Blood Pressure Monitor</td>
+                                <td>Equipment</td>
+                                <td>5</td>
+                                <td>$89.99</td>
+                                <td><span class="status warning">Low Stock</span></td>
+                                <td>
+                                    <button onclick="editItem(2)" class="icon-button">✏️</button>
+                                    <button onclick="orderItem(2)" class="icon-button">🛒</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Paracetamol 500mg</td>
+                                <td>Medicines</td>
+                                <td>850</td>
+                                <td>$0.10</td>
+                                <td><span class="status good">Good Stock</span></td>
+                                <td>
+                                    <button onclick="editItem(3)" class="icon-button">✏️</button>
+                                    <button onclick="orderItem(3)" class="icon-button">🛒</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="side-panel">
+                    <div class="card mb-2">
+                        <h3>Stock Alerts</h3>
+                        <div class="alerts-list">
+                            <div class="alert-item warning">
+                                <span class="alert-icon">⚠️</span>
+                                <div class="alert-content">
+                                    <strong>Low Stock Alert</strong>
+                                    <p>Blood Pressure Monitor (5 remaining)</p>
+                                </div>
+                            </div>
+                            <div class="alert-item info">
+                                <span class="alert-icon">ℹ️</span>
+                                <div class="alert-content">
+                                    <strong>Order Arriving</strong>
+                                    <p>Surgical Gloves - Expected tomorrow</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Consumption Trends</h3>
+                        <canvas id="consumptionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div id="addItemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Item</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="newItemForm" onsubmit="handleAddItem(event)">
+                    <div class="form-group">
+                        <label>Item Name:</label>
+                        <input type="text" name="itemName" required placeholder="Enter item name">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Category:</label>
+                            <select name="category" required onchange="updateSubcategories(this.value)">
+                                <option value="">Select Category</option>
+                                <option value="medicines">Medicines</option>
+                                <option value="equipment">Medical Equipment</option>
+                                <option value="supplies">General Supplies</option>
+                                <option value="laboratory">Laboratory</option>
+                                <option value="emergency">Emergency</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Subcategory:</label>
+                            <select name="subcategory" id="subcategory" required>
+                                <option value="">Select Category First</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Unit:</label>
+                            <select name="unit" required>
+                                <option value="">Select Unit</option>
+                                <option value="pieces">Pieces</option>
+                                <option value="boxes">Boxes</option>
+                                <option value="strips">Strips</option>
+                                <option value="bottles">Bottles</option>
+                                <option value="vials">Vials</option>
+                                <option value="bags">Bags</option>
+                                <option value="kits">Kits</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Manufacturer:</label>
+                            <input type="text" name="manufacturer" placeholder="Enter manufacturer name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Unit Price:</label>
+                            <div class="price-input">
+                                <span class="currency">$</span>
+                                <input type="number" name="unitPrice" step="0.01" required min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Initial Stock:</label>
+                            <input type="number" name="initialStock" required min="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Minimum Stock Level:</label>
+                            <input type="number" name="minStock" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Reorder Level:</label>
+                            <input type="number" name="reorderLevel" required min="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry Date:</label>
+                            <input type="date" name="expiryDate" min="${new Date().toISOString().split('T')[0]}">
+                        </div>
+                        <div class="form-group">
+                            <label>Storage Location:</label>
+                            <input type="text" name="location" placeholder="e.g., Room 101, Shelf A">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <textarea name="description" rows="3" placeholder="Enter item description, specifications, or special instructions"></textarea>
+                    </div>
+                    <div class="form-group alert-settings">
+                        <label>Alert Settings:</label>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" name="lowStockAlert" checked>
+                                Low Stock Alert
+                            </label>
+                            <label>
+                                <input type="checkbox" name="expiryAlert" checked>
+                                Expiry Alert
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="secondary-button" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="primary-button">Add Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .inventory-dashboard {
+            margin-top: 1.5rem;
+        }
+
+        .inventory-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .inventory-table th,
+        .inventory-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ecebea;
+        }
+
+        .inventory-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .status.good {
+            background: #ebf7e6;
+            color: #2e844a;
+        }
+
+        .status.warning {
+            background: #fff7e6;
+            color: #8c6d2c;
+        }
+
+        .icon-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            margin: 0 0.25rem;
+            font-size: 1.1rem;
+        }
+
+        .alerts-list {
+            margin-top: 1rem;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: start;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert-item.warning {
+            background: #fff7e6;
+        }
+
+        .alert-item.info {
+            background: #f0f8ff;
+        }
+
+        .alert-icon {
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .alert-content strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .alert-content p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: #706e6b;
+        }
+
+        .secondary-button {
+            background: #f4f6f9;
+            color: #16325c;
+            border: 1px solid #d8dde6;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .secondary-button:hover {
+            background: #e8ebf1;
+        }
+
+        /* Enhanced form styles */
+        .price-input {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .price-input .currency {
+            position: absolute;
+            left: 0.75rem;
+            color: #706e6b;
+        }
+
+        .price-input input {
+            padding-left: 1.5rem;
+        }
+
+        .alert-settings {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #16325c;
+            cursor: pointer;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        .alert.error {
+            background: #fae5e5;
+            color: #c23934;
+        }
+
+        .alert.success {
+            background: #ebf7e6;
+            color: #2e844a;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-1rem);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .inventory-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .side-panel {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Initialize consumption chart
+        const ctx = document.getElementById('consumptionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Monthly Consumption',
+                    data: [1200, 1350, 1250, 1420, 1550, 1680],
+                    borderColor: '#1589ee',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(21, 137, 238, 0.1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Modal functionality
+        function openNewItemForm() {
+            const modal = document.getElementById('addItemModal');
+            modal.style.display = 'block';
+        }
+
+        function openBulkOrder() {
+            // TODO: Implement bulk order functionality
+            alert('Bulk order feature will be implemented here');
+        }
+
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('addItemModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('addItemModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Category-Subcategory mapping
+        const subcategories = {
+            medicines: [
+                'Antibiotics',
+                'Painkillers',
+                'Cardiovascular',
+                'Respiratory',
+                'Gastrointestinal',
+                'Diabetic Care',
+                'Vaccines'
+            ],
+            equipment: [
+                'Diagnostic',
+                'Monitoring',
+                'Surgical',
+                'Emergency',
+                'Dental',
+                'Laboratory',
+                'Physical Therapy'
+            ],
+            supplies: [
+                'Disposables',
+                'Dressings',
+                'PPE',
+                'Surgical Supplies',
+                'Sterilization',
+                'Office Supplies'
+            ],
+            laboratory: [
+                'Test Kits',
+                'Reagents',
+                'Glassware',
+                'Collection Supplies',
+                'Equipment'
+            ],
+            emergency: [
+                'First Aid',
+                'Life Support',
+                'Trauma Care',
+                'Emergency Medicine'
+            ]
+        };
+
+        // Update subcategories based on selected category
+        function updateSubcategories(category) {
+            const subcategorySelect = document.getElementById('subcategory');
+            subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
+            
+            if (category && subcategories[category]) {
+                subcategories[category].forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = sub.toLowerCase();
+                    option.textContent = sub;
+                    subcategorySelect.appendChild(option);
+                });
+                subcategorySelect.disabled = false;
+            } else {
+                subcategorySelect.disabled = true;
+            }
+        }
+
+        // Handle form submission
+        function handleAddItem(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            // Validate form data
+            if (formData.get('minStock') > formData.get('initialStock')) {
+                showError('Minimum stock cannot be greater than initial stock');
+                return;
+            }
+
+            if (formData.get('reorderLevel') < formData.get('minStock')) {
+                showError('Reorder level should be greater than or equal to minimum stock');
+                return;
+            }
+
+            // Create item object
+            const item = {
+                id: Date.now(),
+                name: formData.get('itemName'),
+                category: formData.get('category'),
+                subcategory: formData.get('subcategory'),
+                unit: formData.get('unit'),
+                manufacturer: formData.get('manufacturer'),
+                unitPrice: parseFloat(formData.get('unitPrice')),
+                stock: parseInt(formData.get('initialStock')),
+                minStock: parseInt(formData.get('minStock')),
+                reorderLevel: parseInt(formData.get('reorderLevel')),
+                location: formData.get('location'),
+                description: formData.get('description'),
+                expiryDate: formData.get('expiryDate'),
+                alerts: {
+                    lowStock: formData.get('lowStockAlert') === 'on',
+                    expiry: formData.get('expiryAlert') === 'on'
+                },
+                addedDate: new Date().toISOString(),
+                status: 'active'
+            };
+
+            // Add item to inventory (in a real app, this would be an API call)
+            addItemToInventory(item);
+            
+            // Close modal and reset form
+            closeModal();
+            form.reset();
+        }
+
+        // Add item to inventory table
+        function addItemToInventory(item) {
+            const tbody = document.getElementById('inventoryList');
+            const tr = document.createElement('tr');
+            
+            tr.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.category}</td>
+                <td>${item.stock}</td>
+                <td>$${item.unitPrice.toFixed(2)}</td>
+                <td>
+                    <span class="status ${item.stock <= item.minStock ? 'warning' : 'good'}">
+                        ${item.stock <= item.minStock ? 'Low Stock' : 'Good Stock'}
+                    </span>
+                </td>
+                <td>
+                    <button onclick="editItem(${item.id})" class="icon-button">✏️</button>
+                    <button onclick="orderItem(${item.id})" class="icon-button">🛒</button>
+                    <button onclick="viewDetails(${item.id})" class="icon-button">ℹ️</button>
+                </td>
+            `;
+            
+            tbody.insertBefore(tr, tbody.firstChild);
+            
+            // Show success message
+            showSuccess('Item added successfully');
+            
+            // Update statistics
+            updateInventoryStats();
+        }
+
+        // Search functionality
+        function searchInventory() {
+            const input = document.getElementById('inventorySearch');
+            const filter = input.value.toUpperCase();
+            const tbody = document.getElementById('inventoryList');
+            const rows = tbody.getElementsByTagName('tr');
+
+            for (let row of rows) {
+                const nameCell = row.cells[0];
+                const categoryCell = row.cells[1];
+                const txtValue = nameCell.textContent + ' ' + categoryCell.textContent;
+                
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const alert = document.createElement('div');
+            alert.className = 'alert error';
+            alert.textContent = message;
+            showAlert(alert);
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            const alert = document.createElement('div');
+            alert.className = 'alert success';
+            alert.textContent = message;
+            showAlert(alert);
+        }
+
+        // Show alert
+        function showAlert(alertElement) {
+            const container = document.querySelector('.container');
+            container.insertBefore(alertElement, container.firstChild);
+            
+            setTimeout(() => {
+                alertElement.remove();
+            }, 3000);
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('addItemModal').style.display = 'none';
+        }
+
+        // Update inventory statistics
+        function updateInventoryStats() {
+            // In a real app, this would fetch data from the backend
+            const stats = calculateInventoryStats();
+            
+            // Update the stats display
+            document.querySelectorAll('.stat-number').forEach((stat, index) => {
+                if (index === 0) stat.textContent = stats.totalItems;
+                if (index === 1) stat.textContent = stats.lowStock;
+                if (index === 2) stat.textContent = stats.pendingOrders;
+                if (index === 3) stat.textContent = '$' + stats.totalValue.toLocaleString();
+            });
+        }
+
+        // Calculate inventory statistics
+        function calculateInventoryStats() {
+            const tbody = document.getElementById('inventoryList');
+            const rows = tbody.getElementsByTagName('tr');
+            
+            let stats = {
+                totalItems: rows.length,
+                lowStock: 0,
+                pendingOrders: 8, // This would come from the backend
+                totalValue: 0
+            };
+
+            Array.from(rows).forEach(row => {
+                if (row.querySelector('.status.warning')) stats.lowStock++;
+                const price = parseFloat(row.cells[3].textContent.replace('$', ''));
+                const stock = parseInt(row.cells[2].textContent);
+                stats.totalValue += price * stock;
+            });
+
+            return stats;
+        }
+
+        // Filter functionality
+        function filterInventory() {
+            const category = document.getElementById('categoryFilter').value.toUpperCase();
+            const tbody = document.getElementById('inventoryList');
+            const rows = tbody.getElementsByTagName('tr');
+
+            for (let row of rows) {
+                const categoryCell = row.cells[1];
+                const txtValue = categoryCell.textContent || categoryCell.innerText;
+                if (category === '' || txtValue.toUpperCase() === category) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        }
+
+        // Item management functions
+        function editItem(itemId) {
+            // TODO: Implement item editing
+            console.log('Editing item:', itemId);
+        }
+
+        function orderItem(itemId) {
+            // TODO: Implement order placement
+            console.log('Ordering item:', itemId);
+        }
+    </script>
+</body>
+</html>
